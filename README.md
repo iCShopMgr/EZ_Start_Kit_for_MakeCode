@@ -1,1 +1,2 @@
-# EZ_Start_Kit_for_MakeCode
+# EZ Start Kit micro:bit V1.0
+* MakeCode version。
