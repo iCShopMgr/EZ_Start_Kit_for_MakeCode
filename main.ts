@@ -1,5 +1,5 @@
 //% weight=20 color=#B3203E icon="\uf118" block="EZ Start Kit"
-namespace EZ_Start_Kit {
+namespace ezstartkit {
     /*
     ===EZ Start Kit : ButtonAB===
     */
