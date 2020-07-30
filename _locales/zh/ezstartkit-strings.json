@@ -3,7 +3,7 @@
     "ezstartkit.Button_read.read1|block": "按鈕A",
     "ezstartkit.Button_read.read2|block": "按鈕B",
     "ezstartkit.Button_read.read3|block": "按鈕A+B",
-    "ezstartkit.buttonAB|block": "按鈕 %br 被按下",
+    "ezstartkit.buttonAB|block": "按鈕 %br 被按下?",
     "ezstartkit.DHT_Data.data1|block": "溫度",
     "ezstartkit.DHT_Data.data2|block": "濕度",
     "ezstartkit.dht11|block": "DHT11溫溼度感測器 %dh",
