@@ -1,4 +1,4 @@
-//% weight=20 color=#B3203E icon="\uf118" block="EZ Start Kit"
+//% weight=0 color=#B3203E icon="\uf118" block="EZ Start Kit"
 namespace ezstartkit {
     /*
     ===EZ Start Kit : ButtonAB===
