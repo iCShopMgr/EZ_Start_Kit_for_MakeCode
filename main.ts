@@ -152,37 +152,41 @@ namespace ezstartkit {
 		while(true) {
 			if (Reading == true) {
 				if (readir[0] > 30000) {
-					basic.pause(100)
-					let count = 0
-					let one_data = 0
-					for (let i = 0; i < readir.length; i++) {
-						if (readir[i] > 1000 && readir[i] < 2000) {
-							count += 1
-						}
-						if (count == 8) {
-							one_data = i + 2
-							break
-						}
-					}
-
-					Pnumber = 0
-					for (let i = 0; i < 8; i++) {
-						if (readir[one_data] > 1000) {
-							Pnumber += (1 << (7 - i))
-						}
-						one_data += 2
-					}
-					basic.pause(50)
-					readir = []
-					if (Reading) {
-						IRREAD()
-					}
+					if (readir.length > 65) {
+				  let one_data = 0
+				  pause(10)
+				  for (let i = 0; i < readir.length; i++) {
+					  if (readir[one_data] > 1000 && readir[one_data] < 2000) {
+						  Pnumber += 1
+					  }
+					  else {
+						  Pnumber = 0
+					  }
+					  if (Pnumber == 8) {
+						  one_data += 2
+						  break
+					  }
+					  one_data += 2
+				  } 
+				  Pnumber = 0
+				  for (let i = 0; i < 8; i++) {
+					  if (readir[one_data] > 1000) {
+						  Pnumber += (1 << (7 - i))
+					  }
+					  one_data += 2
+				  }
+				  readir = []
+				  pause(40)
+				  if (Reading) {
+					  IRREAD()
+				  }
+			  }
 				}
 				else {
 					readir = []
 				}
 			}
-            basic.pause(1)
+			  basic.pause(1)
 		}
 	})
 
