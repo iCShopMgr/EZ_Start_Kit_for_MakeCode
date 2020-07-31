@@ -481,6 +481,6 @@ namespace ezstartkit {
     //% blockId="Variable_Resistor" weight=10 block="Variable Resistor"
     export function variable_resistor(): number {
         let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
-        return reverl
+        return Math.round(reverl)
     }
 }
