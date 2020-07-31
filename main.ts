@@ -3,6 +3,7 @@ namespace ezstartkit {
     /*
     ===EZ Start Kit : ButtonAB===
     */
+    led.enable(false)
     pins.setPull(DigitalPin.P5, PinPullMode.PullNone)
     pins.setPull(DigitalPin.P11, PinPullMode.PullNone)
 
@@ -352,11 +353,11 @@ namespace ezstartkit {
     }
 
     export enum OLED_Size {
-		//% block="Big"
-		size1 = 1,
-		//% block="Small"
-		size2 = 0
-	}
+  		//% block="Big"
+  		size1 = 1,
+  		//% block="Small"
+  		size2 = 0
+	  }
 
     //% blockId="OLED_font_size" weight=51 block="OLED font size %oled_size"
     export function oled_font_size(oled_size: OLED_Size) {
@@ -406,6 +407,9 @@ namespace ezstartkit {
     let neopixel_buf = pins.createBuffer(16 * 3);
     for (let i = 0; i < 16 * 3; i++) {
         neopixel_buf[i] = 0
+    }
+    for (let i = 0; i < 3; i++) {
+        rgb_led_clear();
     }
 
     //% rgb.shadow="colorNumberPicker"
@@ -464,7 +468,7 @@ namespace ezstartkit {
     }
 
     //% blockId="RGB_LED_clear" weight=20 block="RGB LED clear all"
-    export function rgb_led_clera(): void {
+    export function rgb_led_clear(): void {
         for (let i = 0; i < 16 * 3; i++) {
             neopixel_buf[i] = 0
         }
@@ -476,6 +480,7 @@ namespace ezstartkit {
     */
     //% blockId="Variable_Resistor" weight=10 block="Variable Resistor"
     export function variable_resistor(): number {
-        return pins.analogReadPin(AnalogPin.P2)
+        let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
+        return reverl
     }
 }
