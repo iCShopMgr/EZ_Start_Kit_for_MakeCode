@@ -29,6 +29,6 @@
     "ezstartkit.rgb_led_show|block": "RGB LED編號|%index 顯示顏色|%rgb",
     "ezstartkit.rgb_led_set_setBrightness|block": "RGB LED設定總亮度 |%brightness |(0~255)",
     "ezstartkit.rgb_led_set_RGB|block": "紅色|%r 綠色|%g 藍色|%b",
-    "ezstartkit.rgb_led_clera|block": "關閉RGB LED",
+    "ezstartkit.rgb_led_clear|block": "關閉RGB LED",
     "ezstartkit.variable_resistor|block": "可變電阻"
 }
