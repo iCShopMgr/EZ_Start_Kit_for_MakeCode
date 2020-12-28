@@ -487,4 +487,65 @@ namespace ezstartkit {
         let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
         return Math.round(reverl)
     }
+	
+	/*
+    ===EZ Start Kit : IR V2===
+    */
+	let IRREAD_v2: Action;
+	let Reading_v2 = false
+	let readir_v2: number[] = []
+	let irdata_v2 = 0
+	control.inBackground(function () {
+		while (true) {
+			if (Reading_v2 == true) {
+				while (pins.pulseIn(DigitalPin.P8, PulseValue.High) == 0) {
+
+				}
+				let count_v2 = 0
+				for (let index = 0; index < 20; index++) {
+					readir_v2[count_v2] = pins.pulseIn(DigitalPin.P8, PulseValue.Low)
+					count_v2 += 1
+					readir_v2[count_v2] = pins.pulseIn(DigitalPin.P8, PulseValue.High)
+					count_v2 += 1
+				}
+				serial.writeLine("--------------------")
+				for (let index2 = 0; index2 <= readir_v2.length; index2++) {
+					serial.writeLine("" + (readir_v2[index2]))
+				}
+
+				let ir_number = 0
+				let ir_data = 0
+				for (let i = 0; i < readir_v2.length; i++) {
+					if (readir_v2[i] > 1000 && readir_v2[i] < 2000) {
+						ir_number += 1
+					}
+					else {
+						ir_number = 0
+					}
+					if (ir_number == 8) {
+						ir_data = i
+						break
+					}
+				} 
+				irdata_v2 = 0
+				for (let i = ir_data; i < ir_data + 8; i++) {
+					if (readir_v2[i] > 1000) {
+						irdata_v2 += (1 << (7 - i))
+					}
+				}
+			}
+			basic.pause(1)
+		}
+	})
+	
+	//% blockId=IR_read_v2 weight=71 block="IR Read"
+	function irRead(): number {
+		return irdata_v2
+	}
+	
+	//% blockId=IR_remote_v2 weight=70 block="IR Remote v2(NEC)" blockInlineInputs=true
+	function irRemote(add: Action): void {
+		IRREAD_v2 = add
+		Reading_v2 = true
+	}
 }
