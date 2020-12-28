@@ -539,12 +539,12 @@ namespace ezstartkit {
 	})
 	
 	//% blockId=IR_read_v2 weight=71 block="IR Read"
-	function irRead(): number {
+	function irReadv2(): number {
 		return irdata_v2
 	}
 	
 	//% blockId=IR_remote_v2 weight=70 block="IR Remote v2(NEC)" blockInlineInputs=true
-	function irRemote(add: Action): void {
+	function irRemotev2(add: Action): void {
 		IRREAD_v2 = add
 		Reading_v2 = true
 	}
