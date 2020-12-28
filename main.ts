@@ -528,11 +528,12 @@ namespace ezstartkit {
 					readir_v2[count_v2] = pins.pulseIn(DigitalPin.P8, PulseValue.High)
 					count_v2 += 1
 				}
+				/*
 				serial.writeLine("--------------------")
 				for (let index2 = 0; index2 <= readir_v2.length; index2++) {
 					serial.writeLine("" + (readir_v2[index2]))
 				}
-
+				*/
 				let ir_number = 0
 				let ir_data = 0
 				for (let i = 0; i < readir_v2.length; i++) {
