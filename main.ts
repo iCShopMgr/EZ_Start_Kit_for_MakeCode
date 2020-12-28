@@ -1,5 +1,5 @@
 //% weight=0 color=#B3203E icon="\uf118" block="EZ Start Kit"
-//% groups=['micro:bit(v2)']
+//% groups=['micro:bit(V2)']
 namespace ezstartkit {
     /*
     ===EZ Start Kit : ButtonAB===
@@ -559,15 +559,15 @@ namespace ezstartkit {
 	})
 	
 	//% weight=2
-	//% group="micro:bit(v2)"
-	//% blockId=IR_read_v2 weight=71 block="IR Read v2"
+	//% group="micro:bit(V2)"
+	//% blockId=IR_read_v2 weight=71 block="IR Read V2"
 	export function irReadv2(): number {
 		return irdata_v2
 	}
 	
 	//% weight=2
-	//% group="micro:bit(v2)"
-	//% blockId=IR_remote_v2 weight=70 block="IR Remote v2(NEC)" blockInlineInputs=true
+	//% group="micro:bit(V2)"
+	//% blockId=IR_remote_v2 weight=70 block="IR Remote V2(NEC)" blockInlineInputs=true
 	export function irRemotev2(add: Action): void {
 		IRREAD_v2 = add
 		Reading_v2 = true
