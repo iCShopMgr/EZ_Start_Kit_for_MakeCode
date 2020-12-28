@@ -31,6 +31,6 @@
     "ezstartkit.rgb_led_set_RGB|block": "紅色|%r 綠色|%g 藍色|%b",
     "ezstartkit.rgb_led_clear|block": "關閉RGB LED",
     "ezstartkit.variable_resistor|block": "可變電阻",
-    "ezstartkit.irReadv2|block": "紅外線訊息v2",
-    "ezstartkit.irRemotev2|block": "當接收到紅外線遙控器(NEC)訊息時v2"
+    "ezstartkit.irReadv2|block": "紅外線訊息(v2)",
+    "ezstartkit.irRemotev2|block": "當接收到紅外線遙控器(NEC)訊息時(v2)"
 }
