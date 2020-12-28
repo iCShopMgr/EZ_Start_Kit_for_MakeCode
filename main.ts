@@ -1,4 +1,5 @@
 //% weight=0 color=#B3203E icon="\uf118" block="EZ Start Kit"
+//% groups=['micro:bit(v2)']
 namespace ezstartkit {
     /*
     ===EZ Start Kit : ButtonAB===
@@ -15,7 +16,8 @@ namespace ezstartkit {
         //% block="A+B"
         read3 = 3
     }
-
+	
+	//% weight=12
     //% blockId=ButtonAB weight=90 block="Button %br push?"
     export function buttonAB(br: Button_read = 1): boolean {
         if (br == 1) {
@@ -114,7 +116,8 @@ namespace ezstartkit {
             pins.digitalWritePin(DigitalPin.P16, 1)
         }
     }
-
+	
+	//% weight=11
     //% blockId=DHT11 weight=80 block="DHT11 get %dh"
     export function dht11(dh: DHT_Data = 1): number {
         ReadData()
@@ -130,6 +133,7 @@ namespace ezstartkit {
     /*
     ===EZ Start Kit : IR===
     */
+	//% weight=10
     //% blockId=IR weight=72 block="Enable IR"
 	export function enIR() :void{
 		pins.onPulsed(DigitalPin.P8, PulseValue.Low, function () {
@@ -189,12 +193,14 @@ namespace ezstartkit {
 			  basic.pause(1)
 		}
 	})
-
+	
+	//% weight=10
 	//% blockId=IR_read weight=71 block="IR Read"
 	export function irRead(): number {
 		return Pnumber
 	}
-
+	
+	//% weight=10
 	//% blockId=IR_remote weight=70 block="IR Remote(NEC)" blockInlineInputs=true
 	export function irRemote(add: Action): void {
 		IRREAD = add
@@ -212,7 +218,8 @@ namespace ezstartkit {
         //% block="Green"
         write3 = 3
     }
-
+	
+	//% weight=9
     //% blockId=LED_control weight=60 block="LED %choose set velue %brightness |(0~1023)"
     export function led_control(choose: LED_write = 1, brightness: number): void {
         if (choose == 1) {
@@ -300,7 +307,8 @@ namespace ezstartkit {
         set_pos()
         pins.i2cWriteBuffer(60, _screen)
     }
-
+	
+	//% weight=8
     //% blockId="OLED_init" weight=54 block="OLED init"
     export function oled_init() {
         cmd1(0xAE)         // SSD1306_DISPLAYOFF
@@ -325,7 +333,8 @@ namespace ezstartkit {
         oled_clear()
         fontsize = 1
     }
-
+	
+	//% weight=7
     //% blockId="OLED_show_string" weight=53 block="OLED show string at x: %x |y: %y|text: %s"
     export function oled_showString(x: number, y: number, s: string) {
         let col = 0
@@ -351,6 +360,7 @@ namespace ezstartkit {
         pins.i2cWriteBuffer(60, buf)
     }
 
+	//% weight=7
     //% blockId="OLED_show_number" weight=52 block="OLED show a Number at x: %x |y: %y|number: %num"
     export function oled_showNumber(x: number, y: number, num: number) {
         oled_showString(x, y, num.toString())
@@ -362,13 +372,15 @@ namespace ezstartkit {
   		//% block="Small"
   		size2 = 0
 	  }
-
+	
+	//% weight=7
     //% blockId="OLED_font_size" weight=51 block="OLED font size %oled_size"
     export function oled_font_size(oled_size: OLED_Size) {
         fontsize = (oled_size) ? 1 : 0
         cmd2(0xd6, fontsize)
     }
 
+	//% weight=7
     //% blockId="OLED_clera" weight=50 block="OLED clear"
     export function oled_clear() {
         _screen.fill(0)
@@ -379,6 +391,7 @@ namespace ezstartkit {
     /*
     ===EZ Start Kit : Photoresistor===
     */
+	//% weight=6
     //% blockId="Photoresistor" weight=40 block="Photoresistor"
     export function photoresistor(): number {
         return pins.analogReadPin(AnalogPin.P1)
@@ -393,7 +406,8 @@ namespace ezstartkit {
         //% block="OFF"
         switch2 = 2
     }
-
+	
+	//% weight=5
     //% blockId=Relay_control weight=30 block="Relay %ON_OFF"
     export function relay_control(sw: ON_OFF = 1): void {
         if (sw == 1) {
@@ -415,7 +429,8 @@ namespace ezstartkit {
     for (let i = 0; i < 3; i++) {
         rgb_led_clear();
     }
-
+	
+	//% weight=4
     //% rgb.shadow="colorNumberPicker"
     //%  blockId="RGB_LED_show_all" weight=24 block="All RGB LED show color|%rgb"
     export function rgb_led_show_all(rgb: number): void{
@@ -429,7 +444,8 @@ namespace ezstartkit {
         }
         ws2812b.sendBuffer(neopixel_buf, DigitalPin.P12)
     }
-
+	
+	//% weight=5
     //% index.min=0 index.max=2
     //% rgb.shadow="colorNumberPicker"
     //%  blockId="RGB_LED_show" weight=23 block="RGB LED number|%index show color|%rgb"
@@ -456,13 +472,15 @@ namespace ezstartkit {
         }
         ws2812b.sendBuffer(neopixel_buf, DigitalPin.P12)
     }
-
+	
+	//% weight=4
     //% brightness.min=0 brightness.max=255
     //% blockId="RGB_LED_set_brightness" weight=22 block="RGB LED set brightness to |%brightness |(0~255)"
     export function rgb_led_set_setBrightness(brightness: number) {
         _brightness = brightness;
     }
-
+	
+	//% weight=4
     //% r.min=0 r.max=255
     //% g.min=0 g.max=255
     //% b.min=0 b.max=255
@@ -470,7 +488,8 @@ namespace ezstartkit {
     export function rgb_led_set_RGB(r: number, g: number, b: number): number {
         return (r << 16) + (g << 8) + (b);
     }
-
+	
+	//% weight=4
     //% blockId="RGB_LED_clear" weight=20 block="RGB LED clear all"
     export function rgb_led_clear(): void {
         for (let i = 0; i < 16 * 3; i++) {
@@ -482,6 +501,7 @@ namespace ezstartkit {
     /*
     ===EZ Start Kit : Variable_Resistor===
     */
+	//% weight=3
     //% blockId="Variable_Resistor" weight=10 block="Variable Resistor"
     export function variable_resistor(): number {
         let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
@@ -538,11 +558,15 @@ namespace ezstartkit {
 		}
 	})
 	
+	//% weight=2
+	//% group="micro:bit(v2)"
 	//% blockId=IR_read_v2 weight=71 block="IR Read v2"
 	export function irReadv2(): number {
 		return irdata_v2
 	}
 	
+	//% weight=2
+	//% group="micro:bit(v2)"
 	//% blockId=IR_remote_v2 weight=70 block="IR Remote v2(NEC)" blockInlineInputs=true
 	export function irRemotev2(add: Action): void {
 		IRREAD_v2 = add
