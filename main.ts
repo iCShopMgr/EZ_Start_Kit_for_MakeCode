@@ -518,9 +518,7 @@ namespace ezstartkit {
 	control.inBackground(function () {
 		while (true) {
 			if (Reading_v2 == true) {
-				while (pins.pulseIn(DigitalPin.P8, PulseValue.High) == 0) {
-
-				}
+				while (pins.pulseIn(DigitalPin.P8, PulseValue.High) == 0) {}
 				let count_v2 = 0
 				for (let index = 0; index < 20; index++) {
 					readir_v2[count_v2] = pins.pulseIn(DigitalPin.P8, PulseValue.Low)
@@ -528,12 +526,6 @@ namespace ezstartkit {
 					readir_v2[count_v2] = pins.pulseIn(DigitalPin.P8, PulseValue.High)
 					count_v2 += 1
 				}
-				/*
-				serial.writeLine("--------------------")
-				for (let index2 = 0; index2 <= readir_v2.length; index2++) {
-					serial.writeLine("" + (readir_v2[index2]))
-				}
-				*/
 				let ir_number = 0
 				let ir_data = 0
 				for (let i = 0; i < readir_v2.length; i++) {
@@ -544,16 +536,20 @@ namespace ezstartkit {
 						ir_number = 0
 					}
 					if (ir_number == 8) {
-						ir_data = i
+						ir_data = i+1
 						break
 					}
 				} 
 				irdata_v2 = 0
+				let ircount_v2 = 0
 				for (let i = ir_data; i < ir_data + 8; i++) {
 					if (readir_v2[i] > 1000) {
-						irdata_v2 += (1 << (7 - i))
-					}
+						irdata_v2 += (1 << (7 - ircount_v2))
+					} 
+					ircount_v2 += 1
 				}
+				//serial.writeLine("code: " + irdata_v2)
+				//serial.writeLine("--------------------")
 			}
 			basic.pause(1)
 		}
