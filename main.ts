@@ -569,4 +569,10 @@ namespace ezstartkit {
 		IRREAD_v2 = add
 		Reading_v2 = true
 	}
+	
+	//% weight=2
+    //% blockId="IR_V2_Work" block="TR V2 Work"
+    export function rgb_led_clear(): void {
+        Reading_v2 = true
+    }
 }
