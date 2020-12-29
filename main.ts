@@ -557,22 +557,16 @@ namespace ezstartkit {
 	
 	//% weight=2
 	//% group="micro:bit(V2)"
-	//% blockId=IR_read_v2 weight=71 block="IR Read V2"
+    //% blockId="IR_V2_Init" block="IR init V2"
+    export function irInitv2(): void {
+        Reading_v2 = true
+    }
+	
+	//% weight=2
+	//% group="micro:bit(V2)"
+	//% blockId=IR_read_v2 block="IR Read V2"
 	export function irReadv2(): number {
 		return irdata_v2
 	}
 	
-	//% weight=2
-	//% group="micro:bit(V2)"
-	//% blockId=IR_remote_v2 weight=70 block="IR Remote V2(NEC)" blockInlineInputs=true
-	export function irRemotev2(add: Action): void {
-		IRREAD_v2 = add
-		Reading_v2 = true
-	}
-	
-	//% weight=2
-    //% blockId="IR_V2_Work" block="IR V2 Work"
-    export function IR_V2_work(): void {
-        Reading_v2 = true
-    }
 }
