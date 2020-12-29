@@ -18,7 +18,7 @@ namespace ezstartkit {
     }
 	
 	//% weight=12
-    //% blockId=ButtonAB weight=90 block="Button %br push?"
+    //% blockId=ButtonAB block="Button %br push?"
     export function buttonAB(br: Button_read = 1): boolean {
         if (br == 1) {
             if (pins.digitalReadPin(DigitalPin.P5) == 0 && pins.digitalReadPin(DigitalPin.P11) == 1) {
@@ -118,7 +118,7 @@ namespace ezstartkit {
     }
 	
 	//% weight=11
-    //% blockId=DHT11 weight=80 block="DHT11 get %dh"
+    //% blockId=DHT11 block="DHT11 get %dh"
     export function dht11(dh: DHT_Data = 1): number {
         ReadData()
         basic.pause(100)
@@ -134,7 +134,7 @@ namespace ezstartkit {
     ===EZ Start Kit : IR===
     */
 	//% weight=10
-    //% blockId=IR weight=72 block="Enable IR"
+    //% blockId=IR block="Enable IR"
 	export function enIR() :void{
 		pins.onPulsed(DigitalPin.P8, PulseValue.Low, function () {
 			readir.push(pins.pulseDuration())
@@ -195,13 +195,13 @@ namespace ezstartkit {
 	})
 	
 	//% weight=10
-	//% blockId=IR_read weight=71 block="IR Read"
+	//% blockId=IR_read block="IR Read"
 	export function irRead(): number {
 		return Pnumber
 	}
 	
 	//% weight=10
-	//% blockId=IR_remote weight=70 block="IR Remote(NEC)" blockInlineInputs=true
+	//% blockId=IR_remote block="IR Remote(NEC)" blockInlineInputs=true
 	export function irRemote(add: Action): void {
 		IRREAD = add
 		Reading = true
@@ -220,7 +220,7 @@ namespace ezstartkit {
     }
 	
 	//% weight=9
-    //% blockId=LED_control weight=60 block="LED %choose set velue %brightness |(0~1023)"
+    //% blockId=LED_control block="LED %choose set velue %brightness |(0~1023)"
     export function led_control(choose: LED_write = 1, brightness: number): void {
         if (choose == 1) {
             pins.analogWritePin(AnalogPin.P13, brightness)
@@ -309,7 +309,7 @@ namespace ezstartkit {
     }
 	
 	//% weight=8
-    //% blockId="OLED_init" weight=54 block="OLED init"
+    //% blockId="OLED_init" block="OLED init"
     export function oled_init() {
         cmd1(0xAE)         // SSD1306_DISPLAYOFF
         cmd1(0xA4)         // SSD1306_DISPLAYALLON_RESUME
@@ -335,7 +335,7 @@ namespace ezstartkit {
     }
 	
 	//% weight=7
-    //% blockId="OLED_show_string" weight=53 block="OLED show string at x: %x |y: %y|text: %s"
+    //% blockId="OLED_show_string" block="OLED show string at x: %x |y: %y|text: %s"
     export function oled_showString(x: number, y: number, s: string) {
         let col = 0
         let p = 0
@@ -361,7 +361,7 @@ namespace ezstartkit {
     }
 
 	//% weight=7
-    //% blockId="OLED_show_number" weight=52 block="OLED show a Number at x: %x |y: %y|number: %num"
+    //% blockId="OLED_show_number" block="OLED show a Number at x: %x |y: %y|number: %num"
     export function oled_showNumber(x: number, y: number, num: number) {
         oled_showString(x, y, num.toString())
     }
@@ -374,14 +374,14 @@ namespace ezstartkit {
 	  }
 	
 	//% weight=7
-    //% blockId="OLED_font_size" weight=51 block="OLED font size %oled_size"
+    //% blockId="OLED_font_size" block="OLED font size %oled_size"
     export function oled_font_size(oled_size: OLED_Size) {
         fontsize = (oled_size) ? 1 : 0
         cmd2(0xd6, fontsize)
     }
 
 	//% weight=7
-    //% blockId="OLED_clera" weight=50 block="OLED clear"
+    //% blockId="OLED_clera" block="OLED clear"
     export function oled_clear() {
         _screen.fill(0)
         _screen[0] = 0x40
@@ -392,7 +392,7 @@ namespace ezstartkit {
     ===EZ Start Kit : Photoresistor===
     */
 	//% weight=6
-    //% blockId="Photoresistor" weight=40 block="Photoresistor"
+    //% blockId="Photoresistor" block="Photoresistor"
     export function photoresistor(): number {
         return pins.analogReadPin(AnalogPin.P1)
     }
@@ -408,7 +408,7 @@ namespace ezstartkit {
     }
 	
 	//% weight=5
-    //% blockId=Relay_control weight=30 block="Relay %ON_OFF"
+    //% blockId=Relay_control block="Relay %ON_OFF"
     export function relay_control(sw: ON_OFF = 1): void {
         if (sw == 1) {
             pins.digitalWritePin(DigitalPin.P9, 1);
@@ -432,7 +432,7 @@ namespace ezstartkit {
 	
 	//% weight=4
     //% rgb.shadow="colorNumberPicker"
-    //%  blockId="RGB_LED_show_all" weight=24 block="All RGB LED show color|%rgb"
+    //%  blockId="RGB_LED_show_all" block="All RGB LED show color|%rgb"
     export function rgb_led_show_all(rgb: number): void{
         let r = (rgb >> 16) * (_brightness / 255);
         let g = ((rgb >> 8) & 0xFF) * (_brightness / 255);
@@ -448,7 +448,7 @@ namespace ezstartkit {
 	//% weight=5
     //% index.min=0 index.max=2
     //% rgb.shadow="colorNumberPicker"
-    //%  blockId="RGB_LED_show" weight=23 block="RGB LED number|%index show color|%rgb"
+    //%  blockId="RGB_LED_show" block="RGB LED number|%index show color|%rgb"
     export function rgb_led_show(index: number, rgb: number): void{
         let f = index;
         let t = index;
@@ -475,7 +475,7 @@ namespace ezstartkit {
 	
 	//% weight=4
     //% brightness.min=0 brightness.max=255
-    //% blockId="RGB_LED_set_brightness" weight=22 block="RGB LED set brightness to |%brightness |(0~255)"
+    //% blockId="RGB_LED_set_brightness" block="RGB LED set brightness to |%brightness |(0~255)"
     export function rgb_led_set_setBrightness(brightness: number) {
         _brightness = brightness;
     }
@@ -484,13 +484,13 @@ namespace ezstartkit {
     //% r.min=0 r.max=255
     //% g.min=0 g.max=255
     //% b.min=0 b.max=255
-    //% blockId="RGB_LED_set_RGB" weight=21 block="Red|%r Green|%g Blue|%b"
+    //% blockId="RGB_LED_set_RGB" block="Red|%r Green|%g Blue|%b"
     export function rgb_led_set_RGB(r: number, g: number, b: number): number {
         return (r << 16) + (g << 8) + (b);
     }
 	
 	//% weight=4
-    //% blockId="RGB_LED_clear" weight=20 block="RGB LED clear all"
+    //% blockId="RGB_LED_clear" block="RGB LED clear all"
     export function rgb_led_clear(): void {
         for (let i = 0; i < 16 * 3; i++) {
             neopixel_buf[i] = 0
@@ -502,7 +502,7 @@ namespace ezstartkit {
     ===EZ Start Kit : Variable_Resistor===
     */
 	//% weight=3
-    //% blockId="Variable_Resistor" weight=10 block="Variable Resistor"
+    //% blockId="Variable_Resistor" block="Variable Resistor"
     export function variable_resistor(): number {
         let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
         return Math.round(reverl)
