@@ -571,8 +571,8 @@ namespace ezstartkit {
 	}
 	
 	//% weight=2
-    //% blockId="IR_V2_Work" block="TR V2 Work"
-    export function rgb_led_clear(): void {
+    //% blockId="IR_V2_Work" block="IR V2 Work"
+    export function IR_V2_work(): void {
         Reading_v2 = true
     }
 }
