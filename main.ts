@@ -1,5 +1,4 @@
 //% weight=0 color=#B3203E icon="\uf118" block="EZ Start Kit"
-//% groups=['micro:bit(V2)']
 namespace ezstartkit {
     /*
     ===EZ Start Kit : ButtonAB===
@@ -507,66 +506,4 @@ namespace ezstartkit {
         let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
         return Math.round(reverl)
     }
-	
-	/*
-    ===EZ Start Kit : IR V2===
-    */
-	let IRREAD_v2: Action;
-	let Reading_v2 = false
-	let readir_v2: number[] = []
-	let irdata_v2 = 0
-	control.inBackground(function () {
-		while (true) {
-			if (Reading_v2 == true) {
-				while (pins.pulseIn(DigitalPin.P8, PulseValue.High) == 0) {}
-				let count_v2 = 0
-				for (let index = 0; index < 20; index++) {
-					readir_v2[count_v2] = pins.pulseIn(DigitalPin.P8, PulseValue.Low)
-					count_v2 += 1
-					readir_v2[count_v2] = pins.pulseIn(DigitalPin.P8, PulseValue.High)
-					count_v2 += 1
-				}
-				let ir_number = 0
-				let ir_data = 0
-				for (let i = 0; i < readir_v2.length; i++) {
-					if (readir_v2[i] > 1000 && readir_v2[i] < 2000) {
-						ir_number += 1
-					}
-					else {
-						ir_number = 0
-					}
-					if (ir_number == 8) {
-						ir_data = i+1
-						break
-					}
-				} 
-				irdata_v2 = 0
-				let ircount_v2 = 0
-				for (let i = ir_data; i < ir_data + 8; i++) {
-					if (readir_v2[i] > 1000) {
-						irdata_v2 += (1 << (7 - ircount_v2))
-					} 
-					ircount_v2 += 1
-				}
-				//serial.writeLine("code: " + irdata_v2)
-				//serial.writeLine("--------------------")
-			}
-			basic.pause(1)
-		}
-	})
-	
-	//% weight=2
-	//% group="micro:bit(V2)"
-    //% blockId="IR_V2_Init" block="IR init V2"
-    export function irInitv2(): void {
-        Reading_v2 = true
-    }
-	
-	//% weight=2
-	//% group="micro:bit(V2)"
-	//% blockId=IR_read_v2 block="IR Read V2"
-	export function irReadv2(): number {
-		return irdata_v2
-	}
-	
 }
