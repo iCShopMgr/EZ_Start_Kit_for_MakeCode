@@ -30,7 +30,5 @@
     "ezstartkit.rgb_led_set_setBrightness|block": "RGB LED設定總亮度 |%brightness |(0~255)",
     "ezstartkit.rgb_led_set_RGB|block": "紅色|%r 綠色|%g 藍色|%b",
     "ezstartkit.rgb_led_clear|block": "關閉RGB LED",
-    "ezstartkit.variable_resistor|block": "可變電阻",
-    "ezstartkit.irInitv2|block": "紅外線接收器初始化(V2)",
-    "ezstartkit.irReadv2|block": "紅外線訊息(V2)"
+    "ezstartkit.variable_resistor|block": "可變電阻"
 }
