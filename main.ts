@@ -213,7 +213,7 @@ namespace ezstartkit {
                       Pnumber += toHEX
                   }
                   else {
-                      Pnumber = "could not be parsed"
+                      Pnumber = "X"
                   }
                   
                   basic.pause(50)
@@ -239,7 +239,7 @@ namespace ezstartkit {
 	}
 	
 	//% weight=10
-	//% blockId=IR_remote block="IR Remote(NEC)" blockInlineInputs=true
+	//% blockId=IR_remote block="IR Remote(NEC)"
 	export function irRemote(add: Action): void {
 		IRREAD = add
 		Reading = true
