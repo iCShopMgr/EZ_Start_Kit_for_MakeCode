@@ -456,6 +456,16 @@ namespace ezstartkit {
     export function photoresistor(): number {
         return pins.analogReadPin(AnalogPin.P1)
     }
+    
+    /*
+    ===EZ Start Kit : Variable_Resistor===
+    */
+    //% weight=6
+    //% blockId="Variable_Resistor" block="Variable Resistor"
+    export function variable_resistor(): number {
+        let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
+        return Math.round(reverl)
+    }
 
     /*
     ===EZ Start Kit : Relay===
@@ -556,15 +566,5 @@ namespace ezstartkit {
             neopixel_buf[i] = 0
         }
         ws2812b.sendBuffer(neopixel_buf, DigitalPin.P12)
-    }
-
-    /*
-    ===EZ Start Kit : Variable_Resistor===
-    */
-    //% weight=3
-    //% blockId="Variable_Resistor" block="Variable Resistor"
-    export function variable_resistor(): number {
-        let reverl = Math.map(pins.analogReadPin(AnalogPin.P2), 1, 1023, 1023, 0)
-        return Math.round(reverl)
     }
 }
