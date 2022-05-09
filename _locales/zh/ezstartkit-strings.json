@@ -23,7 +23,7 @@
     "ezstartkit.oled_font_size|block": "OLED設定文字大小 %oled_size",
     "ezstartkit.oled_clear|block": "OLED清除畫面",
     "ezstartkit.photoresistor|block": "光感測器數值",
-    "ezstartkit.variable_resistor|block": "可變電阻數值"
+    "ezstartkit.variable_resistor|block": "可變電阻數值",
     "ezstartkit.ON_OFF.switch1|block": "開啟",
     "ezstartkit.ON_OFF.switch2|block": "關閉",
     "ezstartkit.relay_control|block": "繼電器 %ON_OFF",
