@@ -15,8 +15,28 @@ namespace ezstartkit {
         //% block="A+B"
         read3 = 3
     }
-	
-  	//% weight=12
+
+    //% weight=13
+    //% block="Push Bottom %direction"
+    export function buttonABinput(direction: Button_read = 1, a: () => void) {
+        if (direction == 1) {
+            input.onButtonPressed(Button.A, function () {
+                a();
+            })
+        }
+        else if (direction == 2) {
+            input.onButtonPressed(Button.B, function () {
+                a();
+            })
+        }
+        else {
+            input.onButtonPressed(Button.AB, function () {
+                a();
+            })
+        }
+    }
+
+    //% weight=12
     //% blockId=ButtonAB block="Button %br push?"
     export function buttonAB(br: Button_read = 1): boolean {
         if (br == 1) {
@@ -27,7 +47,7 @@ namespace ezstartkit {
                 return false
             }
         }
-        else if (br == 2){
+        else if (br == 2) {
             if (pins.digitalReadPin(DigitalPin.P5) == 1 && pins.digitalReadPin(DigitalPin.P11) == 0) {
                 return true
             }
@@ -44,6 +64,8 @@ namespace ezstartkit {
             }
         }
     }
+
+    
 
     /*
     ===EZ Start Kit : DHT11===
@@ -115,13 +137,13 @@ namespace ezstartkit {
             pins.digitalWritePin(DigitalPin.P16, 1)
         }
     }
-	
-  	//% weight=11
+
+    //% weight=11
     //% blockId=DHT11 block="DHT11 get %dh"
     export function dht11(dh: DHT_Data = 1): number {
         ReadData()
         basic.pause(100)
-        if(dh == 1) {
+        if (dh == 1) {
             return DHT_Temp
         }
         else {
@@ -132,118 +154,118 @@ namespace ezstartkit {
     /*
     ===EZ Start Kit : IR===
     */
-  	//% weight=10
+    //% weight=10
     //% blockId=IR block="Enable IR"
-	export function enIR() :void{
-		pins.onPulsed(DigitalPin.P8, PulseValue.Low, function () {
-			readir.push(pins.pulseDuration())
-		})
-		pins.onPulsed(DigitalPin.P8, PulseValue.High, function () {
-			readir.push(pins.pulseDuration())
-		})
+    export function enIR(): void {
+        pins.onPulsed(DigitalPin.P8, PulseValue.Low, function () {
+            readir.push(pins.pulseDuration())
+        })
+        pins.onPulsed(DigitalPin.P8, PulseValue.High, function () {
+            readir.push(pins.pulseDuration())
+        })
 
-		pins.setEvents(DigitalPin.P8, PinEventType.Pulse)
-		pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
-	}
+        pins.setEvents(DigitalPin.P8, PinEventType.Pulse)
+        pins.setPull(DigitalPin.P8, PinPullMode.PullUp)
+    }
 
-  let hexCode: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
-  let readir: number[] = []
-  readir = []
-  let Pnumber = ""
-  let readCode = 0
-  let toHEX = ""
-  let IRREAD: Action;
-  let Reading = false
-  control.inBackground(function () {
-      while (true) {
-          if (Reading == true) {
-              if (readir[0] > 4000 && readir[0] < 5000) {
-                  basic.pause(100)
-                  let one_data = 0
-                  /*
-                      for (let i = 0; i < readir.length; i++) {
-                          serial.writeLine("" + readir[i])
-                      }
-                      */
-                  Pnumber = ""
-                  //count
-                  readCode = 0
-                  one_data = 2
-                  for (let i = 0; i < 8; i++) {
-                      if (readir[one_data] > 1000) {
-                          readCode += (1 << (7 - i))
-                      }
-                      one_data += 2
-                  }
-                  toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
-                  Pnumber += toHEX
+    let hexCode: string[] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
+    let readir: number[] = []
+    readir = []
+    let Pnumber = ""
+    let readCode = 0
+    let toHEX = ""
+    let IRREAD: Action;
+    let Reading = false
+    control.inBackground(function () {
+        while (true) {
+            if (Reading == true) {
+                if (readir[0] > 4000 && readir[0] < 5000) {
+                    basic.pause(100)
+                    let one_data = 0
+                    /*
+                        for (let i = 0; i < readir.length; i++) {
+                            serial.writeLine("" + readir[i])
+                        }
+                        */
+                    Pnumber = ""
+                    //count
+                    readCode = 0
+                    one_data = 2
+                    for (let i = 0; i < 8; i++) {
+                        if (readir[one_data] > 1000) {
+                            readCode += (1 << (7 - i))
+                        }
+                        one_data += 2
+                    }
+                    toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                    Pnumber += toHEX
 
-                  readCode = 0
-                  one_data = 18
-                  for (let i = 0; i < 8; i++) {
-                      if (readir[one_data] > 1000) {
-                          readCode += (1 << (7 - i))
-                      }
-                      one_data += 2
-                  }
-                  toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
-                  Pnumber += toHEX
-                  if (Pnumber == "00ff") {
-                      Pnumber = ""
-                      readCode = 0
-                      one_data = 34
-                      for (let i = 0; i < 8; i++) {
-                          if (readir[one_data] > 1000) {
-                              readCode += (1 << (7 - i))
-                          }
-                          one_data += 2
-                      }
-                      toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
-                      Pnumber += toHEX
+                    readCode = 0
+                    one_data = 18
+                    for (let i = 0; i < 8; i++) {
+                        if (readir[one_data] > 1000) {
+                            readCode += (1 << (7 - i))
+                        }
+                        one_data += 2
+                    }
+                    toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                    Pnumber += toHEX
+                    if (Pnumber == "00ff") {
+                        Pnumber = ""
+                        readCode = 0
+                        one_data = 34
+                        for (let i = 0; i < 8; i++) {
+                            if (readir[one_data] > 1000) {
+                                readCode += (1 << (7 - i))
+                            }
+                            one_data += 2
+                        }
+                        toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                        Pnumber += toHEX
 
-                      readCode = 0
-                      one_data = 50
-                      for (let i = 0; i < 8; i++) {
-                          if (readir[one_data] > 1000) {
-                              readCode += (1 << (7 - i))
-                          }
-                          one_data += 2
-                      }
-                      toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
-                      Pnumber += toHEX
-                  }
-                  else {
-                      Pnumber = "X"
-                  }
-                  
-                  basic.pause(50)
-                  readir = []
-                  
-                  if (Reading) {
-                      IRREAD()
-                  }
-                  
-              }
-              else {
-                  readir = []
-              }
-          }
-			  basic.pause(1)
-		}
-	})
-	
-	//% weight=10
-	//% blockId=IR_read block="IR Read"
-	export function irRead(): string {
-		return Pnumber
-	}
-	
-	//% weight=10
-	//% blockId=IR_remote block="IR Remote(NEC)"
-	export function irRemote(add: Action): void {
-		IRREAD = add
-		Reading = true
-	}
+                        readCode = 0
+                        one_data = 50
+                        for (let i = 0; i < 8; i++) {
+                            if (readir[one_data] > 1000) {
+                                readCode += (1 << (7 - i))
+                            }
+                            one_data += 2
+                        }
+                        toHEX = hexCode[readCode / 16] + hexCode[readCode % 16]
+                        Pnumber += toHEX
+                    }
+                    else {
+                        Pnumber = "X"
+                    }
+
+                    basic.pause(50)
+                    readir = []
+
+                    if (Reading) {
+                        IRREAD()
+                    }
+
+                }
+                else {
+                    readir = []
+                }
+            }
+            basic.pause(1)
+        }
+    })
+
+    //% weight=10
+    //% blockId=IR_read block="IR Read"
+    export function irRead(): string {
+        return Pnumber
+    }
+
+    //% weight=10
+    //% blockId=IR_remote block="IR Remote(NEC)"
+    export function irRemote(add: Action): void {
+        IRREAD = add
+        Reading = true
+    }
 
     /*
     ===EZ Start Kit : LED===
@@ -256,14 +278,14 @@ namespace ezstartkit {
         //% block="Green"
         write3 = 3
     }
-	
-  	//% weight=9
+
+    //% weight=9
     //% blockId=LED_control block="LED %choose set velue %brightness |(0~1023)"
     export function led_control(choose: LED_write = 1, brightness: number): void {
         if (choose == 1) {
             pins.analogWritePin(AnalogPin.P13, brightness)
         }
-        else if (choose == 2){
+        else if (choose == 2) {
             pins.analogWritePin(AnalogPin.P14, brightness)
         }
         else {
@@ -345,8 +367,8 @@ namespace ezstartkit {
         set_pos()
         pins.i2cWriteBuffer(60, _screen)
     }
-	
-  	//% weight=8
+
+    //% weight=8
     //% blockId="OLED_init" block="OLED init"
     export function oled_init() {
         cmd1(0xAE)         // SSD1306_DISPLAYOFF
@@ -371,8 +393,8 @@ namespace ezstartkit {
         oled_clear()
         fontsize = 1
     }
-	
-  	//% weight=7
+
+    //% weight=7
     //% blockId="OLED_show_string" block="OLED show string at x: %x |y: %y|text: %s"
     export function oled_showString(x: number, y: number, s: string) {
         let col = 0
@@ -388,7 +410,7 @@ namespace ezstartkit {
                 }
                 ind = (x + n) * 5 * (fontsize + 1) + y * 128 + i * (fontsize + 1) + 1
                 _screen[ind] = col
-                if (fontsize)_screen[ind + 1] = col
+                if (fontsize) _screen[ind + 1] = col
             }
         }
         set_pos(x * 5, y)
@@ -398,27 +420,27 @@ namespace ezstartkit {
         pins.i2cWriteBuffer(60, buf)
     }
 
-  	//% weight=7
+    //% weight=7
     //% blockId="OLED_show_number" block="OLED show a Number at x: %x |y: %y|number: %num"
     export function oled_showNumber(x: number, y: number, num: number) {
         oled_showString(x, y, num.toString())
     }
 
     export enum OLED_Size {
-  		//% block="Big"
-  		size1 = 1,
-  		//% block="Small"
-  		size2 = 0
-	  }
-	
-  	//% weight=7
+        //% block="Big"
+        size1 = 1,
+        //% block="Small"
+        size2 = 0
+    }
+
+    //% weight=7
     //% blockId="OLED_font_size" block="OLED font size %oled_size"
     export function oled_font_size(oled_size: OLED_Size) {
         fontsize = (oled_size) ? 1 : 0
         cmd2(0xd6, fontsize)
     }
 
-  	//% weight=7
+    //% weight=7
     //% blockId="OLED_clera" block="OLED clear"
     export function oled_clear() {
         _screen.fill(0)
@@ -429,7 +451,7 @@ namespace ezstartkit {
     /*
     ===EZ Start Kit : Photoresistor===
     */
-  	//% weight=6
+    //% weight=6
     //% blockId="Photoresistor" block="Photoresistor"
     export function photoresistor(): number {
         return pins.analogReadPin(AnalogPin.P1)
@@ -444,8 +466,8 @@ namespace ezstartkit {
         //% block="OFF"
         switch2 = 2
     }
-	
-  	//% weight=5
+
+    //% weight=5
     //% blockId=Relay_control block="Relay %ON_OFF"
     export function relay_control(sw: ON_OFF = 1): void {
         if (sw == 1) {
@@ -467,11 +489,11 @@ namespace ezstartkit {
     for (let i = 0; i < 3; i++) {
         rgb_led_clear();
     }
-	
-  	//% weight=4
+
+    //% weight=4
     //% rgb.shadow="colorNumberPicker"
     //%  blockId="RGB_LED_show_all" block="All RGB LED show color|%rgb"
-    export function rgb_led_show_all(rgb: number): void{
+    export function rgb_led_show_all(rgb: number): void {
         let r = (rgb >> 16) * (_brightness / 255);
         let g = ((rgb >> 8) & 0xFF) * (_brightness / 255);
         let b = ((rgb) & 0xFF) * (_brightness / 255);
@@ -482,12 +504,12 @@ namespace ezstartkit {
         }
         ws2812b.sendBuffer(neopixel_buf, DigitalPin.P12)
     }
-	
-  	//% weight=5
+
+    //% weight=4
     //% index.min=0 index.max=2
     //% rgb.shadow="colorNumberPicker"
     //%  blockId="RGB_LED_show" block="RGB LED number|%index show color|%rgb"
-    export function rgb_led_show(index: number, rgb: number): void{
+    export function rgb_led_show(index: number, rgb: number): void {
         let f = index;
         let t = index;
         let r = (rgb >> 16) * (_brightness / 255);
@@ -510,15 +532,15 @@ namespace ezstartkit {
         }
         ws2812b.sendBuffer(neopixel_buf, DigitalPin.P12)
     }
-	
-  	//% weight=4
+
+    //% weight=4
     //% brightness.min=0 brightness.max=255
     //% blockId="RGB_LED_set_brightness" block="RGB LED set brightness to |%brightness |(0~255)"
     export function rgb_led_set_setBrightness(brightness: number) {
         _brightness = brightness;
     }
-	
-  	//% weight=4
+
+    //% weight=4
     //% r.min=0 r.max=255
     //% g.min=0 g.max=255
     //% b.min=0 b.max=255
@@ -526,8 +548,8 @@ namespace ezstartkit {
     export function rgb_led_set_RGB(r: number, g: number, b: number): number {
         return (r << 16) + (g << 8) + (b);
     }
-	
-  	//% weight=4
+
+    //% weight=4
     //% blockId="RGB_LED_clear" block="RGB LED clear all"
     export function rgb_led_clear(): void {
         for (let i = 0; i < 16 * 3; i++) {
