@@ -395,8 +395,8 @@ namespace ezstartkit {
     }
 
     //% weight=7
-    //% blockId="OLED_show_string" block="OLED show string at x: %x |y: %y|text: %s"
-    export function oled_showString(x: number, y: number, s: string) {
+    //% blockId="OLED_show_string" block="OLED show string at text: %s |x: %x |y: %y"
+    export function oled_showString(s: string, x: number, y: number) {
         let col = 0
         let p = 0
         let ind = 0
@@ -421,8 +421,8 @@ namespace ezstartkit {
     }
 
     //% weight=7
-    //% blockId="OLED_show_number" block="OLED show a Number at x: %x |y: %y|number: %num"
-    export function oled_showNumber(x: number, y: number, num: number) {
+    //% blockId="OLED_show_number" block="OLED show a Number at number: %num |x: %x |y: %y"
+    export function oled_showNumber(num: number, x: number, y: number) {
         oled_showString(x, y, num.toString())
     }
 
