@@ -423,7 +423,7 @@ namespace ezstartkit {
     //% weight=7
     //% blockId="OLED_show_number" block="OLED show a Number at number: %num |x: %x |y: %y"
     export function oled_showNumber(num: number, x: number, y: number) {
-        oled_showString(x, y, num.toString())
+        oled_showString(num.toString(), x, y)
     }
 
     export enum OLED_Size {
