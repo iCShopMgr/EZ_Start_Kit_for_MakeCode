@@ -280,6 +280,7 @@ namespace ezstartkit {
     }
 
     //% weight=9
+    //% brightness.min=0 brightness.max=1023
     //% blockId=LED_control block="LED %choose set velue %brightness |(0~1023)"
     export function led_control(choose: LED_write = 1, brightness: number): void {
         if (choose == 1) {
@@ -502,7 +503,7 @@ namespace ezstartkit {
 
     //% weight=4
     //% rgb.shadow="colorNumberPicker"
-    //%  blockId="RGB_LED_show_all" block="All RGB LED show color|%rgb"
+    //% blockId="RGB_LED_show_all" block="All RGB LED show color|%rgb"
     export function rgb_led_show_all(rgb: number): void {
         let r = (rgb >> 16) * (_brightness / 255);
         let g = ((rgb >> 8) & 0xFF) * (_brightness / 255);
@@ -518,7 +519,7 @@ namespace ezstartkit {
     //% weight=4
     //% index.min=0 index.max=2
     //% rgb.shadow="colorNumberPicker"
-    //%  blockId="RGB_LED_show" block="RGB LED number|%index show color|%rgb"
+    //% blockId="RGB_LED_show" block="RGB LED number|%index show color|%rgb"
     export function rgb_led_show(index: number, rgb: number): void {
         let f = index;
         let t = index;
