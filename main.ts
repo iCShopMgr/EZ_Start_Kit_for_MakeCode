@@ -283,6 +283,12 @@ namespace ezstartkit {
     //% brightness.min=0 brightness.max=1023
     //% blockId=LED_control block="LED %choose set velue %brightness |(0~1023)"
     export function led_control(choose: LED_write = 1, brightness: number): void {
+        if (brightness < 0) {
+          brightness = 0;
+        }
+        if (brightness > 1023) {
+          brightness = 1023;
+        }
         if (choose == 1) {
             pins.analogWritePin(AnalogPin.P13, brightness)
         }
@@ -521,6 +527,12 @@ namespace ezstartkit {
     //% rgb.shadow="colorNumberPicker"
     //% blockId="RGB_LED_show" block="RGB LED number|%index show color|%rgb"
     export function rgb_led_show(index: number, rgb: number): void {
+        if (index < 0) {
+          index = 0;
+        }
+        if (index > 2) {
+          index = 2;
+        }
         let f = index;
         let t = index;
         let r = (rgb >> 16) * (_brightness / 255);
@@ -548,6 +560,12 @@ namespace ezstartkit {
     //% brightness.min=0 brightness.max=255
     //% blockId="RGB_LED_set_brightness" block="RGB LED set brightness to |%brightness |(0~255)"
     export function rgb_led_set_setBrightness(brightness: number) {
+        if (brightness < 0) {
+          brightness = 0;
+        }
+        if (brightness > 255) {
+          brightness = 255;
+        }
         _brightness = brightness;
     }
 
@@ -557,6 +575,24 @@ namespace ezstartkit {
     //% b.min=0 b.max=255
     //% blockId="RGB_LED_set_RGB" block="Red|%r Green|%g Blue|%b"
     export function rgb_led_set_RGB(r: number, g: number, b: number): number {
+        if (r < 0) {
+          r = 0;
+        }
+        if (r > 255) {
+          r = 255;
+        }
+        if (g < 0) {
+          g = 0;
+        }
+        if (g > 255) {
+          g = 255;
+        }
+        if (b < 0) {
+          b = 0;
+        }
+        if (b > 255) {
+          b = 255;
+        }
         return (r << 16) + (g << 8) + (b);
     }
 
