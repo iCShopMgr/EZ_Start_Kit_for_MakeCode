@@ -504,6 +504,8 @@ namespace ezstartkit {
     //% weight=77
     //% blockId="OLED_show_string" block="OLED show string at text: %s |x: %x |y: %y"
     export function oled_showString(s: string, x: number, y: number) {
+        x = Math.constrain(x, 0, 127);
+        y = Math.constrain(y, 0, 63);
         let r = y;
         let c = x;
         if (y < 0) { r = 0 }
@@ -529,6 +531,8 @@ namespace ezstartkit {
     //% weight=75
     //% blockId="OLED_pixel" block="OLED set pixel at x %x|y %y"
     export function oled_pixel(x: number, y: number, color: number = 1) {
+        x = Math.constrain(x, 0, 127);
+        y = Math.constrain(y, 0, 63);
         oled_font_size(0)
         let page = y >> 3
         let shift_page = y % 8
@@ -544,7 +548,7 @@ namespace ezstartkit {
     }
 
 
-
+    /*
     function example_fast_pixel(x: number, y: number, color: number = 1) {
         oled_font_size(0)
 
@@ -574,10 +578,16 @@ namespace ezstartkit {
         let value = [0x40, b, x, page]
         return value
     }
+    */
 
     //% weight=74
     //% blockId="OLED_draw_line" block="OLED draw a line at|x1 %x1|y1 %y1|x2 %x2|y2 %y2"
     export function oled_line(x1: number, y1: number, x2: number, y2: number, color: number = 1) {
+        x1 = Math.constrain(x1, 0, 127);
+        y1 = Math.constrain(y1, 0, 63);
+        x2 = Math.constrain(x2, 0, 127);
+        y2 = Math.constrain(y2, 0, 63);
+
         oled_font_size(0)
         let list = [];
 
@@ -587,16 +597,18 @@ namespace ezstartkit {
         if (x1 > x2) {
             for (dx = x1; dx >= x2; dx--) {
                 dy = Math.round(slope_ * (dx - x1) + y1)
-                list.push(create_pixel_data(dx, dy, color))
+                oled_pixel(dx, dy, color)
+                //list.push(create_pixel_data(dx, dy, color))
             }
         }
         else {
             for (dx = x1; dx <= x2; dx++) {
                 dy = Math.round(slope_ * (dx - x1) + y1)
-                list.push(create_pixel_data(dx, dy, color))
+                oled_pixel(dx, dy, color)
+                //list.push(create_pixel_data(dx, dy, color))
             }
         }
-
+        /*
         let _buf10 = pins.createBuffer(2);
         for (let i = 0; i < list.length; i++) {
             set_pos(list[i][2], list[i][3])
@@ -604,6 +616,7 @@ namespace ezstartkit {
             _buf10[1] = list[i][1]
             pins.i2cWriteBuffer(60, _buf10)
         }
+        */
     }
 
     function hline(x: number, y: number, len: number, color: number = 1) {
@@ -627,19 +640,24 @@ namespace ezstartkit {
         let x2 = x + w - 1
         let y2 = y + h - 1
 
-        //hline(x1, y1, x2 - x1 + 1, color)
+        x1 = Math.constrain(x1, 0, 127);
+        y1 = Math.constrain(y1, 0, 63);
+        x2 = Math.constrain(x2, 0, 127);
+        y2 = Math.constrain(y2, 0, 63);
+
+        /*
         for (let i = x1; i < (x1 + (x2 - x1 + 1)); i++) {
             list.push(create_pixel_data(i, y1, color))
         }
-        //hline(x1, y2, x2 - x1 + 1, color)
+        
         for (let i = x1; i < (x1 + (x2 - x1 + 1)); i++) {
             list.push(create_pixel_data(i, y2, color))
         }
-        //vline(x1, y1, y2 - y1 + 1, color)
+        
         for (let i = y1; i < (y1 + (y2 - y1 + 1)); i++) {
             list.push(create_pixel_data(x1, i, color))
         }
-        //vline(x2, y1, y2 - y1 + 1, color)
+        
         for (let i = y1; i < (y1 + (y2 - y1 + 1)); i++) {
             list.push(create_pixel_data(x2, i, color))
         }
@@ -651,12 +669,20 @@ namespace ezstartkit {
             _buf10[1] = list[i][1]
             pins.i2cWriteBuffer(60, _buf10)
         }
+        */
+        hline(x1, y1, x2 - x1 + 1, color)
+        hline(x1, y2, x2 - x1 + 1, color)
+        vline(x1, y1, y2 - y1 + 1, color)
+        vline(x2, y1, y2 - y1 + 1, color)
     }
 
     //% weight=72
     //% deg.min=0 deg.max=360
     //% blockId="OLED_circle" block="OLED draw a circle at|x %x|y %y|r %r|deg %deg"
     export function oled_circle(x: number, y: number, r: number, deg: number, color: number = 1) {
+        x = Math.constrain(x, 0, 127);
+        y = Math.constrain(y, 0, 63);
+
         oled_font_size(0)
         let list = [];
 
@@ -666,9 +692,10 @@ namespace ezstartkit {
         for (let index = 0; index <= deg; index++) {
             x_ = x + Math.round(r * Math.cos(index / 57.7))
             y_ = y + Math.round(r * Math.sin(index / 57.7))
-            list.push(create_pixel_data(x_, y_, color))
+            oled_pixel(x_, y_, color)
+            //list.push(create_pixel_data(x_, y_, color))
         }
-
+        /*
         serial.writeLine("" + list.length)
         let _buf10 = pins.createBuffer(2);
         for (let i = 0; i < list.length; i++) {
@@ -677,6 +704,7 @@ namespace ezstartkit {
             _buf10[1] = list[i][1]
             pins.i2cWriteBuffer(60, _buf10)
         }
+        */
 
     }
 
