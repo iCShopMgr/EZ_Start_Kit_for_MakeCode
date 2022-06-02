@@ -589,34 +589,49 @@ namespace ezstartkit {
         y2 = Math.constrain(y2, 0, 63);
 
         oled_font_size(0)
-        let list = [];
 
-        let slope_ = (y2 - y1) / (x2 - x1)
-        let dx
-        let dy
-        if (x1 > x2) {
-            for (dx = x1; dx >= x2; dx--) {
-                dy = Math.round(slope_ * (dx - x1) + y1)
-                oled_pixel(dx, dy, color)
-                //list.push(create_pixel_data(dx, dy, color))
-            }
+        if (x1 == x2) {
+            vline(x1, Math.min(y1, y2), Math.abs(y2 - y1))
+        }
+        else if (y1 == y2) {
+            hline(Math.min(x1, x2), y1, Math.abs(x2 - x1))
         }
         else {
-            for (dx = x1; dx <= x2; dx++) {
-                dy = Math.round(slope_ * (dx - x1) + y1)
-                oled_pixel(dx, dy, color)
-                //list.push(create_pixel_data(dx, dy, color))
+            let list = [];
+
+            let slope_ = (y2 - y1) / (x2 - x1)
+            let dx
+            let dy
+
+            if (Math.abs(x2 - x1) > Math.abs(y2 - y1)) {
+                if (x1 > x2) {
+                    for (dx = x1; dx >= x2; dx--) {
+                        dy = Math.round(slope_ * (dx - x1) + y1)
+                        oled_pixel(dx, dy, color)
+                    }
+                }
+                else {
+                    for (dx = x1; dx <= x2; dx++) {
+                        dy = Math.round(slope_ * (dx - x1) + y1)
+                        oled_pixel(dx, dy, color)
+                    }
+                }
+            }
+            else {
+                if (y1 > y2) {
+                    for (dy = y1; dy >= y2; dy--) {
+                        dx = Math.round((dy - y1) / slope_ + x1)
+                        oled_pixel(dx, dy, color)
+                    }
+                }
+                else {
+                    for (dy = y1; dy <= y2; dy++) {
+                        dx = Math.round((dy - y1) / slope_ + x1)
+                        oled_pixel(dx, dy, color)
+                    }
+                }
             }
         }
-        /*
-        let _buf10 = pins.createBuffer(2);
-        for (let i = 0; i < list.length; i++) {
-            set_pos(list[i][2], list[i][3])
-            _buf10[0] = list[i][0]
-            _buf10[1] = list[i][1]
-            pins.i2cWriteBuffer(60, _buf10)
-        }
-        */
     }
 
     function hline(x: number, y: number, len: number, color: number = 1) {
@@ -649,15 +664,15 @@ namespace ezstartkit {
         for (let i = x1; i < (x1 + (x2 - x1 + 1)); i++) {
             list.push(create_pixel_data(i, y1, color))
         }
-        
+
         for (let i = x1; i < (x1 + (x2 - x1 + 1)); i++) {
             list.push(create_pixel_data(i, y2, color))
         }
-        
+
         for (let i = y1; i < (y1 + (y2 - y1 + 1)); i++) {
             list.push(create_pixel_data(x1, i, color))
         }
-        
+
         for (let i = y1; i < (y1 + (y2 - y1 + 1)); i++) {
             list.push(create_pixel_data(x2, i, color))
         }
@@ -682,6 +697,7 @@ namespace ezstartkit {
     export function oled_circle(x: number, y: number, r: number, deg: number, color: number = 1) {
         x = Math.constrain(x, 0, 127);
         y = Math.constrain(y, 0, 63);
+        deg = Math.constrain(deg, 0, 360);
 
         oled_font_size(0)
         let list = [];
